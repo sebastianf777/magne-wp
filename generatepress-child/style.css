@@ -1,0 +1,140 @@
+/*
+Theme Name: GeneratePress Child
+Template: generatepress
+*/
+body:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('img/background.jpg') no-repeat center center/cover;
+    filter: blur(10px);
+    z-index: -1;
+}
+/* Ensure the body retains its immersive background */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Full viewport height */
+    margin: 0;
+}
+
+/* HEADER sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss */
+
+/* Hiding top buggy top bar */
+
+.top-bar {
+    display: none; /* Completely hides the top bar */
+}
+
+/* Sticky Header Container */
+#sticky-header {
+    position: sticky;
+    top: 0; /* Stick it to the top */
+    z-index: 9999; /* Ensure it stays above everything */
+    background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent background */
+    width: 100%; /* Full width */
+    padding: 15px 20px; /* Add padding inside */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
+}
+
+/* Header Content Styling */
+#sticky-header .header-content {
+    display: flex; /* Align items in a row */
+    justify-content: space-between; /* Space between logo and navigation */
+    align-items: center; /* Vertically center content */
+    max-width: 1200px; /* Limit maximum width */
+    margin: 0 auto; /* Center the content horizontally */
+}
+
+/* Logo Styling */
+#sticky-header .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+/* Navigation Links Styling */
+#sticky-header .navigation a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333; /* Default link color */
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+#sticky-header .navigation a:hover {
+    color: #0073aa; /* Hover color (WordPress blue) */
+}
+
+/* sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss */
+
+/* Style the centered content container */
+.centered-content {
+    background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent background for contrast */
+    padding: 20px; /* Add spacing inside */
+    border-radius: 12px; /* Smooth rounded corners */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Elevate the content with a shadow */
+    max-width: 800px; /* Limit the maximum width */
+    width: 90%; /* Responsive width */
+    text-align: center; /* Center text */
+    z-index: 1; /* Ensure content appears above the background */
+}
+
+/* Style for input fields and buttons inside the content */
+.centered-content input,
+.centered-content button {
+    width: 100%; /* Full width for fields and buttons */
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Optional: Style Forminator buttons */
+.centered-content .forminator-button {
+    background-color: #0073aa; /* WordPress blue */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.centered-content .forminator-button:hover {
+    background-color: #005f8c; /* Slightly darker blue on hover */
+}
+
+
+/* FOOTER ............................................... */
+
+
+.site-footer {
+    background-color: #222; /* Dark background */
+    color: #000; /* text */
+    text-align: center; /* Center align text */
+    padding: 15px 0; /* Padding for spacing */
+    margin-top: auto; /* Pushes the footer to the bottom of the page */
+    width: 100%; /* Ensures full width */
+    font-size: 0.9rem; /* Slightly smaller text */
+}
+
+.site-footer a {
+    color: #00aaff; /* Link color */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold;
+}
+
+.site-footer a:hover {
+    color: #ffdd00; /* Hover color */
+    text-decoration: underline;
+}
+
+.inside-site-info {
+    max-width: 1200px; /* Limit the width of the footer content */
+    margin: 0 auto; /* Center content horizontally */
+}
