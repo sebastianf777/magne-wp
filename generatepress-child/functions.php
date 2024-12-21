@@ -22,6 +22,9 @@ add_action('wp_enqueue_scripts', function() {
     error_log('Custom JS Path: ' . get_stylesheet_directory_uri() . '/js/custom-forminator-validation.js');
 });
 
+// code for displaying stats
+
+
 add_shortcode('display_code_stats', function() {
     global $wpdb;
 
