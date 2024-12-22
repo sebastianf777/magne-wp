@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("The custom script is loaded and running.");
 
     // Find the form element by ID
     const form = document.querySelector('#forminator-module-8');
@@ -8,8 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    console.log("Form found: ", form);
-
     // Attach an input event listener to the input field
     const inputField = form.querySelector('input[name="text-1"]');
     if (!inputField) {
@@ -17,11 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
 
-    console.log("Input field found: ", inputField);
-
     // Automatically convert user input to uppercase
     inputField.addEventListener('input', () => {
         inputField.value = inputField.value.toUpperCase();
         console.log("Converted input to uppercase: ", inputField.value);
     });
+
+    //hamburguer button
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navigation = document.querySelector('.navigation');
+
+    if (menuToggle && navigation) {
+        menuToggle.addEventListener('click', () => {
+            navigation.classList.toggle('open'); // Toggle the 'open' class
+        });
+    }
 });

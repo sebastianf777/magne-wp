@@ -9,11 +9,16 @@
     <?php wp_body_open(); ?>
     <div id="sticky-header">
         <div class="header-content">
-            <a href="/" class="logo">My Website</a>
+        <a href="/" class="logo">My Website</a>
+
+        <button class="menu-toggle" aria-label="Toggle Menu">
+            ☰
+        </button>
             <nav class="navigation">
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
                 <a href="#contact">Contact</a>
             </nav>
+            
         </div>
     </div>

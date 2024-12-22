@@ -69,3 +69,11 @@ add_shortcode('display_code_stats', function() {
 
     return $output; // Return the HTML to render on the page
 });
+
+//code to avoid menu theme js conflict features
+
+function dequeue_generatepress_menu_script() {
+    wp_dequeue_script('generate-menu'); // 'generate-menu' is the script handle for menu.min.js
+    wp_deregister_script('generate-menu');
+}
+add_action('wp_enqueue_scripts', 'dequeue_generatepress_menu_script', 20);

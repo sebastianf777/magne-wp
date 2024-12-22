@@ -44,7 +44,7 @@ body {
 /* Header Content Styling */
 #sticky-header .header-content {
     display: flex; /* Align items in a row */
-    justify-content: space-between; /* Space between logo and navigation */
+    justify-content: space-around; /* Space between logo and navigation */
     align-items: center; /* Vertically center content */
     max-width: 1200px; /* Limit maximum width */
     margin: 0 auto; /* Center the content horizontally */
@@ -69,6 +69,49 @@ body {
 
 #sticky-header .navigation a:hover {
     color: #0073aa; /* Hover color (WordPress blue) */
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    #sticky-header .header-content {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start; /* Align items to the start */
+    }
+
+    #sticky-header .logo {
+        margin-bottom: 10px; /* Add spacing below the logo */
+    }
+
+    #sticky-header .navigation {
+        display: none; /* Hide navigation by default on small screens */
+        flex-direction: column; /* Stack links vertically */
+        width: 100%; /* Full width for links */
+        margin-top: 10px; /* Add spacing from the logo */
+    }
+
+    #sticky-header .navigation a {
+        margin: 10px 0; /* Add vertical spacing between links */
+        font-size: 1rem; /* Adjust font size for smaller screens */
+    }
+
+    #sticky-header .menu-toggle {
+        display: block; /* Show the menu toggle button */
+        color: #000;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        margin-left: auto;
+        padding: 10px;
+        top: 0;
+        right: 10px;
+        position: absolute;
+    }
+
+    /* When menu is open */
+    #sticky-header .navigation.open {
+        display: flex; /* Show the navigation links */
+    }
 }
 
 /* sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss */
