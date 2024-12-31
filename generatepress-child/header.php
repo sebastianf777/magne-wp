@@ -9,7 +9,7 @@
     <?php wp_body_open(); ?>
     <div id="sticky-header">
         <div class="header-content">
-        <a href="/" class="logo">My Website</a>
+        <a href="/" class="logo">Discover the Beta Archives</a>
 
         <button class="menu-toggle" aria-label="Toggle Menu">
             ☰

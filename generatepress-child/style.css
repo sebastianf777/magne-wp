@@ -152,6 +152,14 @@ body {
     background-color: #005f8c; /* Slightly darker blue on hover */
 }
 
+.forminator-input{
+    text-align: center;
+}
+
+.button-container{
+    display: flex;
+    flex-direction: column;
+}
 
 /* FOOTER ............................................... */
 

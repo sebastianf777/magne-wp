@@ -22,6 +22,13 @@ add_action('wp_enqueue_scripts', function() {
     error_log('Custom JS Path: ' . get_stylesheet_directory_uri() . '/js/custom-forminator-validation.js');
 });
 
+// code for preventing br tags
+
+add_filter('forminator_custom_form_html', function($content) {
+    return preg_replace('/<br\s*\/?>/', '', $content); // Remove <br> tags
+});
+
+
 // code for displaying stats
 
 
@@ -56,11 +63,27 @@ add_shortcode('display_code_stats', function() {
         }
     }
 
+    // Define personalized messages for each code
+    $code_messages = [
+        'MAGIC123' => 'Wellness Beta Archive.',
+        'HEALTH456' => 'Health Beta.',
+        'LUCKY789' => 'Beta.',
+        // Add more codes and messages as needed
+    ];
+
     // Generate the output list
     $output = '<ul>';
     if (!empty($code_usage)) {
         foreach ($code_usage as $code => $count) {
-            $output .= '<li>' . esc_html($code) . ': ' . esc_html($count) . ' uses</li>';
+            $message = isset($code_messages[$code]) 
+                ? $code_messages[$code] 
+                : 'This code has been used to access the Beta Archive.'; // Default message
+
+            $output .= '<li>' 
+                . esc_html($code) . ': ' 
+                . esc_html($count) . ' People Have Accessed. ' 
+                . esc_html($message) 
+                . '</li>';
         }
     } else {
         $output .= '<li>No data available.</li>';
