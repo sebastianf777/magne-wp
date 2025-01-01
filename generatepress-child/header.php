@@ -11,14 +11,14 @@
         <div class="header-content">
         <a href="/" class="logo">Discover the Beta Archives</a>
 
-        <button class="menu-toggle" aria-label="Toggle Menu">
+        <!-- <button class="menu-toggle" aria-label="Toggle Menu">
             ☰
         </button>
             <nav class="navigation">
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
                 <a href="#contact">Contact</a>
-            </nav>
+            </nav> -->
             
         </div>
     </div>

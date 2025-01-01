@@ -4,6 +4,73 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 });
 
+// AJAX handler for refreshing code stats
+add_action('wp_ajax_refresh_code_stats', 'refresh_code_stats');
+add_action('wp_ajax_nopriv_refresh_code_stats', 'refresh_code_stats');
+
+function refresh_code_stats() {
+    global $wpdb;
+
+    // Define the table for Forminator meta data
+    $table_name = $wpdb->prefix . 'frmt_form_entry_meta';
+
+    // Define the meta_key to filter (e.g., 'text-1')
+    $meta_key = 'text-1';
+
+    // Fetch the meta_values for the specific meta_key
+    $results = $wpdb->get_results(
+        $wpdb->prepare(
+            "SELECT meta_value FROM $table_name WHERE meta_key = %s",
+            $meta_key
+        ),
+        ARRAY_A
+    );
+
+    // Count occurrences of each code
+    $code_usage = [];
+    foreach ($results as $row) {
+        $code = $row['meta_value'];
+        if (!empty($code)) {
+            if (isset($code_usage[$code])) {
+                $code_usage[$code]++;
+            } else {
+                $code_usage[$code] = 1;
+            }
+        }
+    }
+
+    // Define personalized messages for each code
+    $code_messages = [
+        'MAGIC123' => 'Wellness Beta Archive.',
+        'HEALTH456' => 'Health Beta.',
+        'LUCKY789' => 'Beta.',
+    ];
+
+    // Generate the output list
+    $output = '<ul>';
+    if (!empty($code_usage)) {
+        foreach ($code_usage as $code => $count) {
+            $message = isset($code_messages[$code]) 
+                ? $code_messages[$code] 
+                : 'This code has been used to access the Beta Archive.'; // Default message
+
+            $output .= '<li>' 
+                . esc_html($code) . ': ' 
+                . esc_html($count) . ' People Have Accessed. ' 
+                . esc_html($message) 
+                . '</li>';
+        }
+    } else {
+        $output .= '<li>No data available.</li>';
+    }
+    $output .= '</ul>';
+
+    // Return the generated HTML
+    echo $output;
+    wp_die(); // Required to end the AJAX request properly
+}
+
+
 function enqueue_custom_forminator_script() {
     wp_enqueue_script(
         'custom-forminator-validation',
@@ -32,6 +99,7 @@ add_filter('forminator_custom_form_html', function($content) {
 // code for displaying stats
 
 
+// Shortcode to display code stats with a wrapper for AJAX updates
 add_shortcode('display_code_stats', function() {
     global $wpdb;
 
@@ -90,8 +158,11 @@ add_shortcode('display_code_stats', function() {
     }
     $output .= '</ul>';
 
-    return $output; // Return the HTML to render on the page
+    // Wrap the stats in a container for AJAX updates
+    return '<div id="code-stats">' . $output . '</div>';
 });
+
+
 
 //code to avoid menu theme js conflict features
 
