@@ -20,27 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Listen for Forminator's successful submission event
         form.addEventListener('forminator:form:submit:success', function () {
             console.log("Form submission successful. Fetching updated stats...");
-            fetchUpdatedCodeStats(); // Refresh stats after successful submission
+            // fetchUpdatedCodeStats(); // Refresh stats after successful submission
         });
     }
-
-    // Function to fetch and update the code stats
-    const fetchUpdatedCodeStats = () => {
-        const statsContainer = document.querySelector('#code-stats'); // ID of the container displaying stats
-        if (statsContainer) {
-            fetch(ajaxurl + '?action=refresh_code_stats', { method: 'GET' })
-                .then(response => response.text())
-                .then(data => {
-                    statsContainer.innerHTML = data; // Update the stats container with new data
-                    console.log("Code stats updated successfully.");
-                    isSubmitting = false; // Reset the flag after updating stats
-                })
-                .catch(error => {
-                    console.error('Error refreshing code stats:', error);
-                    isSubmitting = false; // Reset the flag even on error
-                });
-        }
-    };
 
     // Automatically convert user input to uppercase
     const inputField = form.querySelector('input[name="text-1"]');
@@ -65,24 +47,57 @@ document.addEventListener('DOMContentLoaded', () => {
                     code_input_field.dispatchEvent(inputEvent);
                 }
 
-                if (this.classList.contains('ky2')) {
+                if (this.classList.contains('available')) {
                     if (form && !isSubmitting) {
                         console.log("Auto-submitting the form...");
                         isSubmitting = true; // Prevent duplicate submissions
-                        form.dispatchEvent(new Event('submit', { bubbles: true }));
+                        // Hide stats and show loading animation
+                        const statsContainer = document.querySelector('#code-stats');
+                        if (statsContainer) {
+                            statsContainer.style.display = 'none'; // Hide the stats container
+
+                        }
+                        // Replace the input field with the loading animation
+                        const inputParent = code_input_field.parentElement; // Get the parent container
+                        if (inputParent) {
+ 
+                            // Temporarily hide the input field (instead of removing it immediately)
+                            code_input_field.style.display = 'none';
+
+                            // Add the loading animation
+                            const loader = document.createElement('div');
+                            loader.classList.add('loading-container');
+                            loader.innerHTML = `
+                            <div class="loading-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200" class="spinner">
+                                    <!-- Adjusted circle to fit the viewBox -->
+                                    <circle cx="100" cy="100" r="70" stroke="green" stroke-width="5" fill="none" stroke-dasharray="439.6" stroke-dashoffset="439.6">
+                                        <animate attributeName="stroke-dashoffset" from="439.6" to="0" dur="2s" repeatCount="indefinite" />
+                                    </circle>
+                                    <!-- Centered text -->
+                                    <text x="50%" y="50%" text-anchor="middle" fill="black" dy=".4em" font-size="25"> Unlocking </text>
+                                </svg>
+                            </div>
+                            `;
+                            inputParent.appendChild(loader); // Add the loader inside the input field's parent
+                        }
+                        // Add a 2-second delay before form submission
+                        setTimeout(() => {
+                            form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                        }, 2000);
                     }
                 }
             });
         });
     };
 
-    // Randomize button order in the container
-    const buttonContainer = document.querySelector('.button-container');
-    if (buttonContainer) {
-        const buttons = Array.from(buttonContainer.children);
-        const shuffledButtons = buttons.sort(() => Math.random() - 0.5);
-        shuffledButtons.forEach(button => buttonContainer.appendChild(button));
-    }
+    // // Randomize button order in the container
+    // const buttonContainer = document.querySelector('.button-container');
+    // if (buttonContainer) {
+    //     const buttons = Array.from(buttonContainer.children);
+    //     const shuffledButtons = buttons.sort(() => Math.random() - 0.5);
+    //     shuffledButtons.forEach(button => buttonContainer.appendChild(button));
+    // }
 
     attachButtonListeners();
 

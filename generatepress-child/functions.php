@@ -4,73 +4,6 @@ add_action( 'wp_enqueue_scripts', function() {
     wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 });
 
-// AJAX handler for refreshing code stats
-add_action('wp_ajax_refresh_code_stats', 'refresh_code_stats');
-add_action('wp_ajax_nopriv_refresh_code_stats', 'refresh_code_stats');
-
-function refresh_code_stats() {
-    global $wpdb;
-
-    // Define the table for Forminator meta data
-    $table_name = $wpdb->prefix . 'frmt_form_entry_meta';
-
-    // Define the meta_key to filter (e.g., 'text-1')
-    $meta_key = 'text-1';
-
-    // Fetch the meta_values for the specific meta_key
-    $results = $wpdb->get_results(
-        $wpdb->prepare(
-            "SELECT meta_value FROM $table_name WHERE meta_key = %s",
-            $meta_key
-        ),
-        ARRAY_A
-    );
-
-    // Count occurrences of each code
-    $code_usage = [];
-    foreach ($results as $row) {
-        $code = $row['meta_value'];
-        if (!empty($code)) {
-            if (isset($code_usage[$code])) {
-                $code_usage[$code]++;
-            } else {
-                $code_usage[$code] = 1;
-            }
-        }
-    }
-
-    // Define personalized messages for each code
-    $code_messages = [
-        'MAGIC123' => 'Wellness Beta Archive.',
-        'HEALTH456' => 'Health Beta.',
-        'LUCKY789' => 'Beta.',
-    ];
-
-    // Generate the output list
-    $output = '<ul>';
-    if (!empty($code_usage)) {
-        foreach ($code_usage as $code => $count) {
-            $message = isset($code_messages[$code]) 
-                ? $code_messages[$code] 
-                : 'This code has been used to access the Beta Archive.'; // Default message
-
-            $output .= '<li>' 
-                . esc_html($code) . ': ' 
-                . esc_html($count) . ' People Have Accessed. ' 
-                . esc_html($message) 
-                . '</li>';
-        }
-    } else {
-        $output .= '<li>No data available.</li>';
-    }
-    $output .= '</ul>';
-
-    // Return the generated HTML
-    echo $output;
-    wp_die(); // Required to end the AJAX request properly
-}
-
-
 function enqueue_custom_forminator_script() {
     wp_enqueue_script(
         'custom-forminator-validation',
@@ -95,9 +28,7 @@ add_filter('forminator_custom_form_html', function($content) {
     return preg_replace('/<br\s*\/?>/', '', $content); // Remove <br> tags
 });
 
-
 // code for displaying stats
-
 
 // Shortcode to display code stats with a wrapper for AJAX updates
 add_shortcode('display_code_stats', function() {
@@ -133,9 +64,9 @@ add_shortcode('display_code_stats', function() {
 
     // Define personalized messages for each code
     $code_messages = [
-        'MAGIC123' => 'Wellness Beta Archive.',
-        'HEALTH456' => 'Health Beta.',
-        'LUCKY789' => 'Beta.',
+        'WELL333' => 'Wellness Beta Archive.',
+        'INFO3201' => 'Information Beta Archive',
+        'ROBOTS52' => 'Robots Beta Archive',
         // Add more codes and messages as needed
     ];
 
@@ -145,11 +76,11 @@ add_shortcode('display_code_stats', function() {
         foreach ($code_usage as $code => $count) {
             $message = isset($code_messages[$code]) 
                 ? $code_messages[$code] 
-                : 'This code has been used to access the Beta Archive.'; // Default message
+                : 'People Have Accessed the unknown Beta Archive.'; // Default message
 
             $output .= '<li>' 
                 . esc_html($code) . ': ' 
-                . esc_html($count) . ' People Have Accessed. ' 
+                . esc_html($count) . ' People Have Accessed the ' 
                 . esc_html($message) 
                 . '</li>';
         }
@@ -162,8 +93,6 @@ add_shortcode('display_code_stats', function() {
     return '<div id="code-stats">' . $output . '</div>';
 });
 
-
-
 //code to avoid menu theme js conflict features
 
 function dequeue_generatepress_menu_script() {
@@ -171,3 +100,58 @@ function dequeue_generatepress_menu_script() {
     wp_deregister_script('generate-menu');
 }
 add_action('wp_enqueue_scripts', 'dequeue_generatepress_menu_script', 20);
+
+// Register admin page for resetting code stats
+add_action('admin_menu', function() {
+    add_menu_page(
+        'Reset Code Stats',            // Page title
+        'Reset Code Stats',            // Menu title
+        'manage_options',              // Capability
+        'reset-code-stats',            // Menu slug
+        'reset_code_stats_page',       // Callback function
+        'dashicons-trash',             // Icon
+        20                             // Position
+    );
+});
+
+// Admin page content
+function reset_code_stats_page() {
+    global $wpdb;
+
+    // Define the table and meta_key
+    $table_name = $wpdb->prefix . 'frmt_form_entry_meta';
+    $meta_key = 'text-1';
+
+    // Handle form submission
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset_code'])) {
+        $code_to_reset = sanitize_text_field($_POST['reset_code']);
+
+        if (!empty($code_to_reset)) {
+            // Delete all entries for the specific code
+            $deleted_rows = $wpdb->query(
+                $wpdb->prepare(
+                    "DELETE FROM $table_name WHERE meta_key = %s AND meta_value = %s",
+                    $meta_key,
+                    $code_to_reset
+                )
+            );
+
+            // Show success message
+            echo '<div class="updated"><p>Reset successful! ' . esc_html($deleted_rows) . ' entries removed for code: ' . esc_html($code_to_reset) . '</p></div>';
+        } else {
+            echo '<div class="error"><p>Please enter a valid code to reset.</p></div>';
+        }
+    }
+
+    // Display admin form
+    ?>
+    <div class="wrap">
+        <h1>Reset Code Stats</h1>
+        <form method="post">
+            <label for="reset_code">Enter Code to Reset:</label>
+            <input type="text" name="reset_code" id="reset_code" required>
+            <button type="submit" class="button button-primary">Reset Code Stats</button>
+        </form>
+    </div>
+    <?php
+}

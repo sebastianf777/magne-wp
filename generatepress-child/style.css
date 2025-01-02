@@ -35,9 +35,9 @@ body {
     position: sticky;
     top: 0; /* Stick it to the top */
     z-index: 9999; /* Ensure it stays above everything */
-    background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent background */
+    background-color: #222; /* Semi-transparent background */
     width: 100%; /* Full width */
-    padding: 15px 20px; /* Add padding inside */
+    padding: 15px 0px; /* Add padding inside */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow for depth */
 }
 
@@ -46,16 +46,15 @@ body {
     display: flex; /* Align items in a row */
     justify-content: space-around; /* Space between logo and navigation */
     align-items: center; /* Vertically center content */
-    max-width: 1200px; /* Limit maximum width */
+    background-color: #fff;
     margin: 0 auto; /* Center the content horizontally */
 }
 
 /* Logo Styling */
 #sticky-header .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 2.5rem;
     text-decoration: none;
-    color: #333;
+    color: #000;
 }
 
 /* Navigation Links Styling */
@@ -75,7 +74,7 @@ body {
 @media (max-width: 768px) {
     #sticky-header .header-content {
         flex-direction: column; /* Stack items vertically */
-        align-items: flex-start; /* Align items to the start */
+        text-align: center;
     }
 
     #sticky-header .logo {
@@ -114,7 +113,17 @@ body {
     }
 }
 
-/* sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss */
+/* ARTICLE */
+/* ARTICLE */
+/* ARTICLE */
+
+article{
+    max-width: 527px;
+}
+
+/* FORMINATOR */
+/* FORMINATOR */
+/* FORMINATOR */
 
 /* Style the centered content container */
 .centered-content {
@@ -139,7 +148,7 @@ body {
     box-sizing: border-box;
 }
 
-/* Optional: Style Forminator buttons */
+/* Optional: Style Forminator buttons ========== FORMINATOR */
 .centered-content .forminator-button {
     background-color: #0073aa; /* WordPress blue */
     color: #fff;
@@ -161,6 +170,75 @@ body {
     flex-direction: column;
 }
 
+#forminator-module-8 .forminator-row #text-1{
+    pointer-events: none; 
+}
+#forminator-module-8 .forminator-row #text-1 input{
+    font-size: 28px;
+}
+
+.entry-content .forminator-ui#forminator-module-8.forminator-design--default .forminator-title{
+    text-align: center;
+    font-size: 28px;
+}
+
+#section-1{
+    color: green;
+}
+#section-2{
+    color: red;
+}
+
+
+.populate-btn{
+    background-color: #666; /* Gray */
+    color: #ffffff;
+    cursor: not-allowed;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    border: 1px dashed white;
+    font-size: 20px;
+}
+@media (max-width: 550px) {
+    .populate-btn{
+        font-size: 28px;
+    }
+}
+.populate-btn:hover {
+    background-color: #474747; /* Green */
+}
+.available{
+    background-color: #000; /* Green */
+    color: white;
+    cursor: pointer;
+    color: white;
+    border: 1px solid white;
+
+}
+.available:hover {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    background-color: #0A0A0A; /* Green */
+}
+
+#code-stats ul{
+    margin: 0 0 1.5em 1em;
+    font-size: 20px;
+}
+@media (max-width: 550px) {
+    #code-stats ul{
+        font-size: 28px;
+    }
+}
+/* LOADER ............................................... */
+
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+
 /* FOOTER ............................................... */
 
 
@@ -171,9 +249,15 @@ body {
     padding: 15px 0; /* Padding for spacing */
     margin-top: auto; /* Pushes the footer to the bottom of the page */
     width: 100%; /* Ensures full width */
-    font-size: 0.9rem; /* Slightly smaller text */
 }
-
+.site-info{
+    font-size: 20px;
+}
+@media (max-width: 550px) {
+    .site-info{
+        font-size: 28px;
+    }
+}
 .site-footer a {
     color: #00aaff; /* Link color */
     text-decoration: none; /* Remove underline */
