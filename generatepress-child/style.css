@@ -230,8 +230,8 @@ min-height: 40px;
     background-color: #0A0A0A; /* Green */
 }
 
-#code-stats ul{
-    margin: 0 0 1.5em 1em;
+#code-stats ul {
+    margin: 3px 1em 1.5em 1em;
     font-size: 20px;
 }
 @media (max-width: 550px) {
