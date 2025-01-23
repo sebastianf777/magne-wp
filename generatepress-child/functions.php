@@ -6,6 +6,13 @@ add_action( 'wp_enqueue_scripts', function() {
 
 function enqueue_custom_forminator_script() {
     wp_enqueue_script(
+        'chatbot', // Handle name
+        get_stylesheet_directory_uri() . '/js/chatbot.js', // Path to your chatbot.js file
+        [], // No dependencies
+        filemtime(get_stylesheet_directory() . '/js/chatbot.js'), // Automatically update version
+        true // Load in footer
+    );
+    wp_enqueue_script(
         'custom-forminator-validation',
         get_stylesheet_directory_uri() . '/js/custom-forminator-validation.js',
         [], // No dependencies

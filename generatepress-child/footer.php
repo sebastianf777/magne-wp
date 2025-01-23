@@ -13,14 +13,21 @@
                 <span class="copyright">© <?php echo date('Y'); ?> magnesiusai.com</span> • Created By Sebastian Fontana
             </div>
         </div>
+        <div id="chatbot-container">
+    <div id="chatbot-header">
+        <h3>Chatbot</h3>
+        <button id="chatbot-minimize" aria-label="Minimize Chatbot">–</button>
+    </div>
+    <div id="chatbot-body">
+        <div id="chatbot-messages"></div>
+        <input type="text" id="chatbot-input" placeholder="Ask a question...">
+        <button id="chatbot-send">Send</button>
+    </div>
+</div>
+
     </footer>
 </div>
-<div id="chatbot-container" style="position: fixed; bottom: 20px; right: 20px; background: #f1f1f1; border-radius: 10px; box-shadow: 0px 4px 6px rgba(0,0,0,0.1); padding: 10px; max-width: 300px;">
-    <h3>Chatbot</h3>
-    <div id="chatbot-messages" style="height: 200px; overflow-y: auto; border: 1px solid #ccc; padding: 5px; margin-bottom: 10px;"></div>
-    <input type="text" id="chatbot-input" placeholder="Ask a question..." style="width: calc(100% - 20px); padding: 5px;">
-    <button id="chatbot-send" style="margin-top: 5px;">Send</button>
-</div>
+
 
 <script>
     const API_URL = "https://magne-chatbot.vercel.app/chat"; // Replace with your deployed Vercel URL
@@ -58,7 +65,6 @@
         input.value = '';
     });
 </script>
-
 
 <?php wp_footer(); ?>
 </body>
