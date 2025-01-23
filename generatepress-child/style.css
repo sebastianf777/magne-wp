@@ -286,7 +286,7 @@ min-height: 40px;
 
 #chatbot-container {
     position: fixed;
-    bottom: 20px;
+    bottom: 24px;
     right: 20px;
     background: #f1f1f1;
     border-radius: 10px;
